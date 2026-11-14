@@ -1,0 +1,10 @@
+# Software-related values (loop rates, modes, switches, ...).
+# See common.yaml for an explanation of the format.
+#
+# All values here are PLACEHOLDERS. Replace them with your real ones.
+/**:
+  ros__parameters:
+    software:
+      control_rate_hz: 50.0     # float
+      debug: false              # boolean (true / false)
+      mode: "idle"              # string

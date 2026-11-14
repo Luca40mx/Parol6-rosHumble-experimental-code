@@ -1,0 +1,2 @@
+Put your own libraries here, one subfolder per library.
+Example: lib/JointDriver/JointDriver.h + JointDriver.cpp

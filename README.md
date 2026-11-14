@@ -12,10 +12,21 @@ that log a message once per second, one in Python and one in C++.
 ## Layout
 
 ```text
-ros2_robot_ws/
+robot_ws/
 ├── src/                     # all source code
+│   ├── robot_config/        # central YAML configuration + launch files
+│   │   ├── config/*.yaml
+│   │   └── launch/{robot_bridge,homing}.launch.py
+│   ├── arduino_ros_bridge/  # serial bridge: radians <-> motor steps
+│   ├── robot_homing/        # finds the limit switches, defines zero
 │   ├── test_node_python/
 │   └── test_node_cpp/
+├── firmware/                # Arduino Mega 2560 firmware (PlatformIO project,
+│   │                        #   outside src/ and marked with COLCON_IGNORE)
+│   ├── platformio.ini
+│   └── src/main.cpp
+├── docs/
+│   └── notes.md             # cheat sheet: commands, gotchas, decisions
 ├── .vscode/
 │   └── c_cpp_properties.json   # C++ IntelliSense config for ROS 2 Humble
 ├── .gitignore
@@ -55,13 +66,13 @@ this setup.
 3. Clone this repository into your home directory:
 
    ```bash
-   git clone https://github.com/Luca40mx/Parol6-rosHumble-experimental-code.git ~/ros2_robot_ws
+   git clone https://github.com/Luca40mx/Parol6-rosHumble-experimental-code.git ~/robot_ws
    ```
 
 4. Build the workspace:
 
    ```bash
-   cd ~/ros2_robot_ws
+   cd ~/robot_ws
    source /opt/ros/humble/setup.bash
    colcon build
    ```
@@ -71,15 +82,15 @@ this setup.
 
    ```bash
    source /opt/ros/humble/setup.bash
-   if [ -f ~/ros2_robot_ws/install/setup.bash ]; then
-     source ~/ros2_robot_ws/install/setup.bash
+   if [ -f ~/robot_ws/install/setup.bash ]; then
+     source ~/robot_ws/install/setup.bash
    fi
    ```
 
 ## Daily use
 
 ```bash
-cd ~/ros2_robot_ws
+cd ~/robot_ws
 colcon build                      # only after changing code
 source install/setup.bash         # only in terminals opened before the build
 
@@ -95,14 +106,45 @@ ros2 node info /test_node_cpp
 
 Stop a node with `Ctrl+C`.
 
+## Configuration (YAML parameters)
+
+All shared settings live in `src/robot_config/config/*.yaml` (`common.yaml`,
+`hardware.yaml`, `software.yaml`). The values in these files are placeholders.
+
+```bash
+ros2 launch robot_config bringup.launch.py    # starts the nodes with every YAML file
+```
+
+- **Add a value:** copy a line in a YAML file, then `colcon build`.
+- **Add a YAML file:** copy an existing file in `config/`, change its prefix,
+  then `colcon build`. The launch file loads every `*.yaml` automatically.
+- **Use a value in a node:** declare it with `declare_parameter`, then read it
+  with `get_parameter`. See `test_node_python.py` and `test_node_cpp.cpp`.
+- A value that is in a YAML file but not declared in a node is ignored by that node.
+
 ## Troubleshooting
 
 | Symptom | Fix |
 |---|---|
-| `Package '...' not found` | The workspace is not sourced: `source ~/ros2_robot_ws/install/setup.bash` |
+| `Package '...' not found` | The workspace is not sourced: `source ~/robot_ws/install/setup.bash` |
 | Code changes have no effect | Rebuild with `colcon build`, then source again |
 | `ros2 node list` is empty | The nodes are not running, or `ROS_DOMAIN_ID` differs between terminals |
 | Red squiggles on `#include "rclcpp/rclcpp.hpp"` in VS Code | Reload the window; make sure the C/C++ extension (`ms-vscode.cpptools`) is installed |
+
+## Firmware
+
+`firmware/` is a PlatformIO project for the Arduino Mega 2560 that drives the
+six stepper motors and reads the six limit switches. It is not a ROS 2 package
+and `colcon build` ignores it.
+
+The firmware is deliberately dumb: it reads sensors and drives motors, and
+every decision is made by ROS 2 over a serial link. See
+[firmware/README.md](firmware/README.md).
+
+## Notes
+
+[docs/notes.md](docs/notes.md) collects the commands, the gotchas and the
+design decisions of this workspace.
 
 ## License
 

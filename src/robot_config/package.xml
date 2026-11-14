@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>robot_config</name>
+  <version>0.0.0</version>
+  <description>Central configuration: YAML parameter files and the launch file that loads them</description>
+  <maintainer email="145957795+Luca40mx@users.noreply.github.com">Luca40mx</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Needed at run time by the launch file. -->
+  <exec_depend>ament_index_python</exec_depend>
+  <exec_depend>launch</exec_depend>
+  <exec_depend>launch_ros</exec_depend>
+
+  <!-- The nodes started by the launch file. Add a line here for every new node. -->
+  <exec_depend>test_node_python</exec_depend>
+  <exec_depend>test_node_cpp</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
