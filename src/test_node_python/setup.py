@@ -23,8 +23,10 @@ setup(
         ],
     },
     entry_points={
+
         'console_scripts': [
             'test_node_python = test_node_python.test_node_python:main',
+            'test_node_python_self_made = test_node_python.test_node_python_self_made:main',
         ],
     },
 )

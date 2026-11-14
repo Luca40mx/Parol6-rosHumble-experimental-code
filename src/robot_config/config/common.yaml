@@ -1,0 +1,23 @@
+# General values shared by the whole robot.
+#
+# HOW THIS FILE WORKS
+#   /**              -> the values below are given to EVERY node
+#   ros__parameters  -> fixed keyword required by ROS 2
+#   common:          -> prefix = name of this file's topic, to avoid name clashes
+#                       with other YAML files. A parameter below is seen by the
+#                       nodes as "common.robot_name", "common.<next_name>", ...
+#
+# HOW TO ADD A NEW VALUE: copy one line below, change name and value.
+# Keep the types stable: 6 is an integer, 6.0 is a float, "abc" is a string.
+#
+# All values here are PLACEHOLDERS. Replace them with your real ones.
+/**:
+  ros__parameters:
+    common:
+      robot_name: "parol6"
+      # Which log messages the nodes print: the messages of this level and of
+      # every more serious level.
+      # 10=debug, 20=info, 30=warn, 40=error, 50=fatal
+      log_level: 20
+
+

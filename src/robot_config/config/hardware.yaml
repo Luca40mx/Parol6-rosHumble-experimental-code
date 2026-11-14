@@ -1,0 +1,97 @@
+# Hardware-related values (serial ports, joints, limits, ...).
+# See common.yaml for an explanation of the format.
+/**:
+  ros__parameters:
+    hardware:
+      # Stable path: /dev/ttyACM0 and /dev/ttyACM1 swap around between
+      # reboots and replugs, the by-id link never does. It is tied to
+      # this particular board's serial number, so it changes if the
+      # Arduino is replaced. List yours with: ls /dev/serial/by-id/
+      port: "/dev/serial/by-id/usb-Arduino__www.arduino.cc__0042_145323032323511132F0-if00"
+      baudrate: 250000          # exact divisor on a 16 MHz AVR, unlike 115200
+      num_joints: 6             # integer
+      max_speed: 1.5            # float (always write the decimal point)
+
+      # A travel guard lives in every joint block below, as max_abs_rad.
+
+      # -----------------------------------------------------------------
+      # One block per joint, in the same order as the firmware.
+      #
+      #   steps_per_rev  full steps of the motor itself (200 = 1.8 deg)
+      #   microsteps     what the DIP switches on the driver are set to
+      #                  (1 = full step, which is 200 pulses/rev)
+      #   gear_ratio     reduction between motor and joint, from the PAROL6
+      #                  documentation
+      #   invert         set to true if the joint turns the wrong way
+      #   max_abs_rad    arm_bridge refuses any target beyond +/- this value.
+      #                  These are the PAROL6 joint travels. Until the arm has
+      #                  been homed they are only a TYPO GUARD measured from
+      #                  the power-on position, because the firmware calls
+      #                  "zero" wherever the arm happened to be when it was
+      #                  switched on. After homing they are real joint limits.
+      #   home_dir       which way homing looks FIRST for the limit switch:
+      #                  +1 or -1. Only a hint, never a requirement: if that
+      #                  way comes up empty, homing goes back to where the
+      #                  joint started and looks the other way on its own. A
+      #                  right guess just saves that second trip, so the arm
+      #                  does not have to be switched off in any set pose.
+      #   home_offset_rad  how far the joint steps back off the switch once it
+      #                  has found it. The position it stops on is the one
+      #                  that becomes 0 rad, so this number IS the zero.
+      #                  It has to be wide enough for the switch to release.
+      #
+      # arm_bridge computes:
+      #   steps_per_rad = steps_per_rev * microsteps * gear_ratio / (2*pi)
+      #
+      # Raising microsteps gives a finer joint but a slower arm, because the
+      # Arduino can only produce a limited number of pulses per second.
+      # -----------------------------------------------------------------
+      joints:
+        base:                        # J1, belt
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 6.4
+          invert: false
+          max_abs_rad: 3.15           # 123.0 deg
+          home_dir: +1
+          home_offset_rad: 0.2
+        shoulder:                    # J2, planetary gearbox
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 20.0
+          invert: false
+          max_abs_rad: 2.47           # 141.6 deg of travel
+          home_dir: -1
+          home_offset_rad: 0.2
+        upperArm:                    # J3, planetary 20:1 with a 38:42 belt
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 18.0952381
+          invert: false
+          max_abs_rad: 3.14           # 180.0 deg of travel
+          home_dir: 1
+          home_offset_rad: 0.2
+        elbow:                       # J4, belt
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 4.0
+          invert: false
+          max_abs_rad: 1.84           # 105.5 deg
+          home_dir: -1
+          home_offset_rad: 0.2
+        forearm:                     # J5, belt
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 4.0
+          invert: false
+          max_abs_rad: 3.57           # 90.0 deg
+          home_dir: 1
+          home_offset_rad: 0.2
+        wrist:                       # J6, planetary gearbox
+          steps_per_rev: 200
+          microsteps: 1
+          gear_ratio: 10.0
+          invert: false
+          max_abs_rad: 6.28           # 360.0 deg of travel
+          home_dir: 1
+          home_offset_rad: 0.2

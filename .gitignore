@@ -13,3 +13,7 @@ __pycache__/
 .vscode/*
 !.vscode/c_cpp_properties.json
 src/.vscode/
+/docs
+
+video_tutorial
+
