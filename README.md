@@ -14,9 +14,11 @@ that log a message once per second, one in Python and one in C++.
 ```text
 robot_ws/
 ├── src/                     # all source code
-│   ├── robot_config/        # central YAML configuration + launch files
-│   │   ├── config/*.yaml
-│   │   └── launch/{robot_bridge,homing}.launch.py
+│   ├── robot_config/        # only data: the YAML parameter files
+│   │   └── config/*.yaml
+│   ├── robot_bringup/      # how to start things: launch files + RViz layout
+│   │   ├── launch/{robot_bridge,homing,display}.launch.py
+│   │   └── rviz/parol6.rviz
 │   ├── arduino_ros_bridge/  # serial bridge: radians <-> motor steps
 │   ├── robot_homing/        # finds the limit switches, defines zero
 │   ├── test_node_python/
@@ -65,7 +67,13 @@ this setup.
 
 3. Clone this repository into your home directory:
 
+   The STL meshes are stored with Git LFS, so install it **before** cloning.
+   Without it the clone succeeds but every `.stl` arrives as a small text file
+   holding a pointer, and RViz shows nothing:
+
    ```bash
+   sudo apt install git-lfs
+   git lfs install
    git clone https://github.com/Luca40mx/Parol6-rosHumble-experimental-code.git ~/robot_ws
    ```
 
@@ -112,7 +120,7 @@ All shared settings live in `src/robot_config/config/*.yaml` (`common.yaml`,
 `hardware.yaml`, `software.yaml`). The values in these files are placeholders.
 
 ```bash
-ros2 launch robot_config bringup.launch.py    # starts the nodes with every YAML file
+ros2 launch robot_bringup robot_bridge.launch.py   # starts the nodes with every YAML file
 ```
 
 - **Add a value:** copy a line in a YAML file, then `colcon build`.

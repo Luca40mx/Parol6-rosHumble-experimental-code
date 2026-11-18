@@ -4,7 +4,7 @@ Homing is not part of robot_bridge.launch.py on purpose: it MOVES THE ARM as
 soon as it starts. Start it by hand, when you mean it.
 
 The bridge has to be running already, in another terminal:
-    ros2 launch robot_config robot_bridge.launch.py
+    ros2 launch robot_bringup robot_bridge.launch.py
 """
 
 import glob

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<robot name="parol_6">
+  <link name="world"/>
+
+  <link name="base_link">
+  <visual>
+    <origin xyz="0.0 0.0 0" rpy="0.0 0.0 0.0"/>
+    <geometry>
+      <mesh filename="package://robot_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+        <material name="base_link_material">
+        <color rgba="255.0 0.0 0.0 1.0"/>
+        </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 0" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+    <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+  </joint>
+
+
+
+
+
+
+  <link name="L1">
+    <visual>
+      <origin xyz="0.0 0.0 -0.0705" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L1_material">
+        <color rgba="0.90 0.49 0.13 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.0 0.0 -0.0705" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="L1" type="revolute">
+    <parent link="base_link"/>
+    <child link="L1"/>
+    <origin xyz="0.0 0.0 0.0705" rpy="0.0 0.0 0.0"/>
+    <limit lower="-0.65" upper="3.14" effort="300.0" velocity="3.0"/> 
+    <axis xyz="0.0 0.0 1.0"/>
+  </joint>
+
+
+
+
+
+
+
+ <link name="L2">
+    <visual>
+      <origin xyz="0.023421 0.050 -0.11050" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L2_material">
+        <color rgba="0.20 0.55 0.85 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.023421 0.050 -0.11050" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>  
+  </link>
+
+  <joint name="L2" type="revolute">
+    <parent link="L1"/>
+    <child link="L2"/>
+    <origin xyz="-0.023421 -0.050 0.039" rpy="0.0 0.0 0.0"/>
+    <limit lower="-0.6" upper="1.3" effort="300.0" velocity="3.0"/> 
+    <axis xyz="0.0 1.0 0.0"/>
+  </joint>
+
+
+
+
+
+
+
+  <link name="L3">
+    <visual>
+      <origin xyz="0.134652 0.03420 -0.252019" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L3_material">
+        <color rgba="0.30 0.69 0.31 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.134652 0.03420 -0.252019" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L3.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>    
+  </link>
+
+  <joint name="L3" type="revolute">
+    <parent link="L2"/>
+    <child link="L3"/>
+    <origin xyz="-0.111231 0.01580 0.141519" rpy="0.0 0.0 0.0"/>
+    <limit lower="-1.2" upper="0.4" effort="300.0" velocity="3.0"/> 
+    <axis xyz="0.0 1.0 0.0"/>
+  </joint>
+
+
+
+
+
+
+  
+  <link name="L4">
+    <visual>
+      <origin xyz="0.205702 -0.00180 -0.295519" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L4.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L4_material">
+        <color rgba="0.95 0.77 0.06 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.205702 -0.00180 -0.295519" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L4.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>   
+  </link>
+
+  <joint name="L4" type="revolute">
+    <parent link="L3"/>
+    <child link="L4"/>
+    <origin xyz="-0.07105 0.036 0.04350" rpy="0.0 0.0 0.0"/>
+    <limit lower="-1.57" upper="1.57" effort="300.0" velocity="3.0"/> 
+    <axis xyz="1.0 0.0 0.0"/>
+  </joint>
+
+
+
+
+
+
+
+
+
+  <link name="L5">
+    <visual>
+      <origin xyz="0.311002 -0.02955 -0.295519" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L5_material">
+        <color rgba="0.61 0.35 0.71 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.311002 -0.02955 -0.295519" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L5.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>    
+  </link>
+
+  <joint name="L5" type="revolute">
+    <parent link="L4"/>
+    <child link="L5"/>
+    <origin xyz="-0.10530 0.02715 0.0" rpy="0.0 0.0 0.0"/>
+    <limit lower="-0.4" upper="3.14" effort="300.0" velocity="3.0"/> 
+    <axis xyz="0.0 1.0 0.0"/>
+  </joint>
+
+
+
+
+
+
+
+
+  <link name="L6">
+    <visual>
+      <origin xyz="0.311002 -0.00250 -0.246019" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/L6.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="L6_material">
+        <color rgba="0.85 0.27 0.27 1.0"/>
+      </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0.311002 -0.00250 -0.246019" rpy="0.0 0.0 0.0"/>
+      <geometry>
+        <mesh filename="package://robot_description/meshes/simplify_L6.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>    
+  </link>
+
+  <joint name="L6" type="revolute">
+    <parent link="L5"/>
+    <child link="L6"/>
+    <origin xyz="0.0 -0.02645 -0.04950" rpy="0.0 0.0 0.0"/>
+    <limit lower="-3.14" upper="3.14" effort="300.0" velocity="3.0"/> 
+    <axis xyz="0.0 0.0 1.0"/>
+  </joint>
+    
+</robot>

@@ -3,20 +3,14 @@
 <package format="3">
   <name>robot_config</name>
   <version>0.0.0</version>
-  <description>Central configuration: YAML parameter files and the launch file that loads them</description>
+  <description>Solo dati: i file YAML dei parametri, condivisi da tutti i nodi</description>
   <maintainer email="145957795+Luca40mx@users.noreply.github.com">Luca40mx</maintainer>
   <license>Apache-2.0</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
-  <!-- Needed at run time by the launch file. -->
-  <exec_depend>ament_index_python</exec_depend>
-  <exec_depend>launch</exec_depend>
-  <exec_depend>launch_ros</exec_depend>
-
-  <!-- The nodes started by the launch file. Add a line here for every new node. -->
-  <exec_depend>test_node_python</exec_depend>
-  <exec_depend>test_node_cpp</exec_depend>
+  <!-- Nessuna dipendenza di esecuzione: qui non parte niente, ci sono solo
+       file. Chi li usa e' robot_bringup. -->
 
   <export>
     <build_type>ament_cmake</build_type>

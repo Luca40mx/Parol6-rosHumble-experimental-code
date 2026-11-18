@@ -1,0 +1,63 @@
+# Configurazione di RViz per il braccio: una griglia e il modello, basta.
+# Esiste per una ragione sola: Fixed Frame. Senza questo file RViz parte con
+# "map", che in parol6.urdf non esiste, e non disegna nulla.
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Width: 320
+  - Class: rviz_common/Views
+    Name: Views
+Visualization Manager:
+  Global Options:
+    # La radice dell'URDF. Il nome deve combaciare esattamente.
+    Fixed Frame: world
+    Background Color: 48; 48; 48
+    Frame Rate: 30
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Cell Size: 0.1
+      Plane Cell Count: 10
+      Color: 160; 160; 164
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      # robot_state_publisher pubblica l'URDF su questo topic, così RViz non
+      # ha bisogno di una sua copia del file.
+      Description Source: Topic
+      Description Topic:
+        Value: /robot_description
+        Depth: 5
+        # robot_state_publisher pubblica il modello UNA VOLTA sola, all'avvio,
+        # con durability transient_local. Un iscritto "volatile" lo riceve solo
+        # se si iscrive prima: una corsa che a volte perdi, e quando la perdi
+        # RViz non disegna niente senza dire perche'.
+        Durability Policy: Transient Local
+        Reliability Policy: Reliable
+      Visual Enabled: true
+      Collision Enabled: false
+      Alpha: 1
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: false
+      Marker Scale: 0.15
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Name: Current View
+      Distance: 1.0
+      Pitch: 0.4
+      Yaw: 0.8
+      Focal Point:
+        X: 0
+        Y: 0
+        Z: 0.15
+      Target Frame: world
+Window Geometry:
+  Height: 800
+  Width: 1200
+  Displays:
+    collapsed: false

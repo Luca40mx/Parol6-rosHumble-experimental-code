@@ -3,10 +3,11 @@ project(robot_config)
 
 find_package(ament_cmake REQUIRED)
 
-# This package contains no code to compile. It only installs the config/ and
-# launch/ folders, so that ROS can find them after `colcon build`.
-# Every file you add to these folders is installed automatically.
-install(DIRECTORY config launch
+# Questo pacchetto non contiene codice: installa solo config/, cioe' i file
+# YAML che vengono passati come parametri ai nodi. Ogni file che aggiungi in
+# quella cartella viene installato da solo.
+# Chi avvia i nodi e' robot_bringup, che legge gli YAML da qui.
+install(DIRECTORY config
   DESTINATION share/${PROJECT_NAME})
 
 ament_package()
